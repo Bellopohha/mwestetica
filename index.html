@@ -1,529 +1,314 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MW Estética Automotiva - Especialista em Faróis</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0c0c0c; color: #f8fafc; }
+        
+        .comparison-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.2);
+            margin: auto;
+        }
 
-      body {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #0c0c0c;
-        color: #f8fafc;
-      }
+        .comparison-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-      .comparison-container {
-        position: relative;
-        width: 100%;
-        max-width: 800px;
-        aspect-ratio: 16 / 9;
-        overflow: hidden;
-        border-radius: 24px;
-        box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.2);
-        margin: auto;
-      }
+        .image-after {
+            clip-path: inset(0 0 0 50%);
+        }
 
-      .comparison-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: #f59e0b;
+            cursor: ew-resize;
+            z-index: 10;
+        }
 
-      .image-after {
-        clip-path: inset(0 0 0 50%);
-      }
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background: #f59e0b;
+            border: 4px solid #0c0c0c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
 
-      .slider-handle {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        width: 4px;
-        background: #f59e0b;
-        cursor: ew-resize;
-        z-index: 10;
-      }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+        }
 
-      .slider-button {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 44px;
-        height: 44px;
-        background: #f59e0b;
-        border: 4px solid #0c0c0c;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #000;
-        box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
-      }
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: #f59e0b;
+        }
 
-      .glow-text {
-        text-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
-      }
-
-      .service-card {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .service-card:hover {
-        transform: translateY(-10px);
-        border-color: #f59e0b;
-      }
+        .price-link:hover {
+            filter: brightness(1.2);
+        }
     </style>
-  </head>
-  <body class="antialiased">
+</head>
+<body class="antialiased">
+
     <div class="min-h-screen flex flex-col">
-      <!-- Header -->
-      <header
-        class="p-6 md:p-8 flex justify-between items-center max-w-7xl mx-auto w-full"
-      >
-        <div class="flex items-center gap-4">
-          <!-- Simulação da Logo MW -->
-          <div
-            class="bg-amber-500 text-black px-3 py-1 rounded-lg font-black italic text-2xl tracking-tighter shadow-lg shadow-amber-500/20"
-          >
-            MW
-          </div>
-          <h1
-            class="text-xl font-extrabold tracking-tighter uppercase italic hidden sm:block"
-          >
-            Estética <span class="text-stone-500 font-normal">Automotiva</span>
-          </h1>
-        </div>
-        <div class="flex gap-4">
-          <a
-            href="https://wa.me/message/OGFM7AEP7MNSP1"
-            class="bg-amber-500 text-black px-6 py-2 rounded-full font-bold text-sm hover:bg-amber-400 transition-colors"
-            >Agendar Agora</a
-          >
-        </div>
-      </header>
-
-      <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-12 space-y-24">
-        <!-- Hero -->
-        <section class="text-center space-y-12">
-          <div class="space-y-4">
-            <h2
-              class="text-4xl md:text-7xl font-black tracking-tighter uppercase italic glow-text"
-            >
-              Performance em <span class="text-amber-500">Iluminação.</span>
-            </h2>
-            <p class="text-stone-400 max-w-2xl mx-auto text-lg italic">
-              Restauração de elite para quem não aceita menos que a perfeição.
-            </p>
-          </div>
-
-          <!-- Slider com imagens reais do usuário -->
-          <div class="comparison-container" id="comparison">
-            <!-- Antes -->
-            <img
-              src="https://i.ibb.co/Z1HsvKk1/2.jpg"
-              alt="Antes - Farol Danificado"
-              class="comparison-image"
-            />
-            <!-- Depois -->
-            <div
-              class="comparison-image image-after"
-              id="after-img"
-              style="
-                background-image: url('https://i.ibb.co/Ps5nCRpj/1.jpg');
-                background-size: cover;
-                background-position: center;
-              "
-            ></div>
-            <div class="slider-handle" id="handle">
-              <div class="slider-button">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="m18 8 4 4-4 4" />
-                  <path d="m6 8-4 4 4 4" />
-                </svg>
-              </div>
+        <!-- Header -->
+        <header class="p-6 md:p-8 flex justify-between items-center max-w-7xl mx-auto w-full">
+            <div class="flex items-center gap-4">
+                <!-- Simulação da Logo MW -->
+                <div class="bg-amber-500 text-black px-3 py-1 rounded-lg font-black italic text-2xl tracking-tighter shadow-lg shadow-amber-500/20">MW</div>
+                <h1 class="text-xl font-extrabold tracking-tighter uppercase italic hidden sm:block">Estética <span class="text-stone-500 font-normal">Automotiva</span></h1>
             </div>
-            <div
-              class="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/10"
-            >
-              Antes
+            <div class="flex gap-4">
+                <a href="https://wa.me/message/OGFM7AEP7MNSP1" class="bg-amber-500 text-black px-6 py-2 rounded-full font-bold text-sm hover:bg-amber-400 transition-colors">Agendar Agora</a>
             </div>
-            <div
-              class="absolute top-4 right-4 bg-amber-500 text-black px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg"
-            >
-              MW Depois
-            </div>
-          </div>
-          <p
-            class="text-[10px] text-amber-500/60 uppercase font-black tracking-[0.3em] animate-pulse"
-          >
-            Arraste para comparar a transformação
-          </p>
-        </section>
+        </header>
 
-        <!-- Tech Section -->
-        <section
-          class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center bg-stone-900/30 p-8 md:p-16 rounded-[3rem] border border-stone-800/50"
-        >
-          <div class="space-y-8">
-            <h3 class="text-3xl font-black uppercase italic leading-none">
-              Por que não fazer <br /><span class="text-amber-500"
-                >apenas um polimento?</span
-              >
-            </h3>
-            <p class="text-stone-400 leading-relaxed text-lg italic">
-              O polimento comum remove o amarelado temporariamente, mas retira a
-              proteção original do policarbonato, fazendo com que o farol volte
-              a queimar em poucas semanas. Nosso sistema de
-              <strong>Vapor de Polímero</strong> funde uma nova camada de
-              proteção UV ultra-resistente, garantindo durabilidade de
-              <strong>3 a 5 anos</strong>.
-            </p>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div
-                class="flex items-center gap-3 bg-stone-900 p-4 rounded-2xl border border-stone-800"
-              >
-                <div
-                  class="w-2 h-2 bg-amber-500 rounded-full shadow-[0_0_10px_#f59e0b]"
-                ></div>
-                <span class="text-xs font-black uppercase tracking-wider"
-                  >Proteção UV Máxima</span
-                >
-              </div>
-              <div
-                class="flex items-center gap-3 bg-stone-900 p-4 rounded-2xl border border-stone-800"
-              >
-                <div
-                  class="w-2 h-2 bg-amber-500 rounded-full shadow-[0_0_10px_#f59e0b]"
-                ></div>
-                <span class="text-xs font-black uppercase tracking-wider"
-                  >Acabamento Vitrificado</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="h-[300px] w-full">
-            <canvas id="visChart"></canvas>
-          </div>
-        </section>
-
-        <!-- Packages -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-          <!-- Convencional -->
-          <div
-            class="service-card bg-stone-900/50 border border-stone-800 p-8 rounded-[2.5rem] space-y-6"
-          >
-            <div class="space-y-2">
-              <h4
-                class="text-sm font-black text-stone-500 uppercase tracking-widest"
-              >
-                Convencional
-              </h4>
-              <div class="text-4xl font-black italic">
-                R$ 200
-                <span
-                  class="text-xs font-normal text-stone-500 italic lowercase"
-                  >/par</span
-                >
-              </div>
-            </div>
-            <p class="text-sm text-stone-400 leading-relaxed italic">
-              Restauração completa das lentes com até 95% de remoção dos
-              defeitos. Ideal para amarelados leves e renovação de brilho.
-            </p>
-            <hr class="border-stone-800" />
-            <ul
-              class="text-[10px] font-black space-y-3 uppercase text-stone-500 tracking-wider"
-            >
-              <li class="flex items-center gap-2">
-                <svg
-                  class="text-amber-500 w-3 h-3"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  />
-                </svg>
-                Remoção de opacidade
-              </li>
-              <li class="flex items-center gap-2">
-                <svg
-                  class="text-amber-500 w-3 h-3"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  />
-                </svg>
-                Proteção selante
-              </li>
-            </ul>
-          </div>
-
-          <!-- Vapor Pro -->
-          <div
-            class="service-card bg-white text-black p-8 rounded-[2.5rem] space-y-6 shadow-2xl shadow-amber-500/30 relative overflow-hidden"
-          >
-            <div
-              class="absolute top-0 right-0 bg-amber-500 px-6 py-1 font-black text-[10px] uppercase tracking-tighter"
-            >
-              Mais Procurado
-            </div>
-            <div class="space-y-2">
-              <h4
-                class="text-sm font-black text-amber-600 uppercase tracking-widest"
-              >
-                Vapor Pro
-              </h4>
-              <div class="text-4xl font-black italic">
-                R$ 350
-                <span
-                  class="text-xs font-normal text-stone-400 italic lowercase"
-                  >/par</span
-                >
-              </div>
-            </div>
-            <p class="text-sm text-stone-700 leading-relaxed italic">
-              Tecnologia de Vapor de Polímero. Restauração profunda que
-              reconstrói a camada protetora do farol.
-            </p>
-            <hr class="border-stone-200" />
-            <ul
-              class="text-[10px] font-black space-y-3 uppercase tracking-wider"
-            >
-              <li class="flex items-center gap-2">
-                <svg
-                  class="text-amber-600 w-3 h-3"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  />
-                </svg>
-                2 Anos de Garantia
-              </li>
-              <li class="flex items-center gap-2">
-                <svg
-                  class="text-amber-600 w-3 h-3"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  />
-                </svg>
-                Duração de 4 a 5 anos
-              </li>
-              <li class="flex items-center gap-2">
-                <svg
-                  class="text-amber-600 w-3 h-3"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  />
-                </svg>
-                Brilho Vitrificado
-              </li>
-            </ul>
-          </div>
-
-          <!-- Remoção de Infiltração -->
-          <div
-            class="service-card bg-stone-900 border border-amber-500/30 p-8 rounded-[2.5rem] space-y-6"
-          >
-            <div class="space-y-2">
-              <h4
-                class="text-sm font-black text-amber-500 uppercase tracking-widest"
-              >
-                Infiltração & Vedação
-              </h4>
-              <div class="flex items-baseline gap-2">
-                <span class="text-xs text-stone-500 font-bold uppercase"
-                  >A partir de</span
-                >
-                <div class="text-4xl font-black italic">
-                  R$ 150
-                  <span
-                    class="text-xs font-normal text-stone-500 italic lowercase"
-                    >/cada</span
-                  >
+        <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-12 space-y-24">
+            
+            <!-- Hero -->
+            <section class="text-center space-y-12">
+                <div class="space-y-4">
+                    <h2 class="text-4xl md:text-7xl font-black tracking-tighter uppercase italic glow-text">Performance em <span class="text-amber-500">Iluminação.</span></h2>
+                    <p class="text-stone-400 max-w-2xl mx-auto text-lg italic">Restauração de elite para quem não aceita menos que a perfeição.</p>
                 </div>
-              </div>
+
+                <!-- Slider com imagens reais do usuário -->
+                <div class="comparison-container" id="comparison">
+                    <!-- Antes -->
+                    <img src="https://i.ibb.co/Z1HsvKk1/2.jpg" alt="Antes - Farol Danificado" class="comparison-image">
+                    <!-- Depois -->
+                    <div class="comparison-image image-after" id="after-img" style="background-image: url('https://i.ibb.co/Ps5nCRpj/1.jpg'); background-size: cover; background-position: center;">
+                    </div>
+                    <div class="slider-handle" id="handle">
+                        <div class="slider-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m18 8 4 4-4 4"/><path d="m6 8-4 4 4 4"/></svg>
+                        </div>
+                    </div>
+                    <div class="absolute top-4 left-4 bg-black/70 backdrop-blur-md px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/10">Antes</div>
+                    <div class="absolute top-4 right-4 bg-amber-500 text-black px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg">MW Depois</div>
+                </div>
+                <p class="text-[10px] text-amber-500/60 uppercase font-black tracking-[0.3em] animate-pulse">Arraste para comparar a transformação</p>
+            </section>
+
+            <!-- Tech Section -->
+            <section class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center bg-stone-900/30 p-8 md:p-16 rounded-[3rem] border border-stone-800/50">
+                <div class="space-y-8">
+                    <h3 class="text-3xl font-black uppercase italic leading-none">Por que não fazer <br><span class="text-amber-500">apenas um polimento?</span></h3>
+                    <p class="text-stone-400 leading-relaxed text-lg italic">O polimento comum remove o amarelado temporariamente, mas retira a proteção original do policarbonato, fazendo com que o farol volte a queimar em poucas semanas. Nosso sistema de <strong>Vapor de Polímero</strong> funde uma nova camada de proteção UV ultra-resistente, garantindo durabilidade de <strong>3 a 5 anos</strong>.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3 bg-stone-900 p-4 rounded-2xl border border-stone-800">
+                            <div class="w-2 h-2 bg-amber-500 rounded-full shadow-[0_0_10px_#f59e0b]"></div>
+                            <span class="text-xs font-black uppercase tracking-wider">Proteção UV Máxima</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-stone-900 p-4 rounded-2xl border border-stone-800">
+                            <div class="w-2 h-2 bg-amber-500 rounded-full shadow-[0_0_10px_#f59e0b]"></div>
+                            <span class="text-xs font-black uppercase tracking-wider">Acabamento Vitrificado</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="h-[300px] w-full">
+                    <canvas id="visChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Packages -->
+            <div class="space-y-8">
+                <!-- Nota de Pagamento -->
+                <div class="flex items-center justify-center gap-3 bg-amber-500/10 border border-amber-500/20 p-4 rounded-2xl max-w-2xl mx-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    <p class="text-xs md:text-sm font-bold uppercase tracking-wider text-amber-500">Pagamento realizado somente após a conclusão do serviço</p>
+                </div>
+
+                <section class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                    
+                    <!-- Convencional -->
+                    <div class="service-card bg-stone-900/50 border border-stone-800 p-8 rounded-[2.5rem] space-y-6">
+                        <div class="space-y-2">
+                            <h4 class="text-sm font-black text-stone-500 uppercase tracking-widest">Convencional</h4>
+                            <a href="https://wa.me/message/OGFM7AEP7MNSP1?text=Olá! Gostaria de agendar a restauração Convencional dos meus faróis." class="price-link block group">
+                                <div class="text-4xl font-black italic transition-colors group-hover:text-amber-500">R$ 200 <span class="text-xs font-normal text-stone-500 italic lowercase">/par</span></div>
+                                <div class="text-[10px] text-stone-600 font-bold uppercase mt-1">Clique para agendar</div>
+                            </a>
+                        </div>
+                        <p class="text-sm text-stone-400 leading-relaxed italic">Restauração completa das lentes com até 95% de remoção dos defeitos. Ideal para amarelados leves e renovação de brilho.</p>
+                        <hr class="border-stone-800">
+                        <ul class="text-[10px] font-black space-y-3 uppercase text-stone-500 tracking-wider">
+                            <li class="flex items-center gap-2"><svg class="text-amber-500 w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Remoção de opacidade</li>
+                            <li class="flex items-center gap-2"><svg class="text-amber-500 w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Proteção selante</li>
+                        </ul>
+                    </div>
+
+                    <!-- Vapor Pro -->
+                    <div class="service-card bg-white text-black p-8 rounded-[2.5rem] space-y-6 shadow-2xl shadow-amber-500/30 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 bg-amber-500 px-6 py-1 font-black text-[10px] uppercase tracking-tighter">Mais Procurado</div>
+                        <div class="space-y-2">
+                            <h4 class="text-sm font-black text-amber-600 uppercase tracking-widest">Vapor Pro</h4>
+                            <a href="https://wa.me/message/OGFM7AEP7MNSP1?text=Olá! Tenho interesse no Vapor Pro com 2 anos de garantia para meus faróis." class="price-link block group text-black">
+                                <div class="text-4xl font-black italic transition-colors group-hover:text-amber-600">R$ 350 <span class="text-xs font-normal text-stone-400 italic lowercase">/par</span></div>
+                                <div class="text-[10px] text-stone-400 font-bold uppercase mt-1">Clique para agendar</div>
+                            </a>
+                        </div>
+                        <p class="text-sm text-stone-700 leading-relaxed italic">Tecnologia de Vapor de Polímero. Restauração profunda que reconstrói a camada protetora do farol.</p>
+                        <hr class="border-stone-200">
+                        <ul class="text-[10px] font-black space-y-3 uppercase tracking-wider">
+                            <li class="flex items-center gap-2"><svg class="text-amber-600 w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> 2 Anos de Garantia</li>
+                            <li class="flex items-center gap-2"><svg class="text-amber-600 w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Duração de 4 a 5 anos</li>
+                            <li class="flex items-center gap-2"><svg class="text-amber-600 w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg> Brilho Vitrificado</li>
+                        </ul>
+                    </div>
+
+                    <!-- Remoção de Infiltração -->
+                    <div class="service-card bg-stone-900 border border-amber-500/30 p-8 rounded-[2.5rem] space-y-6">
+                        <div class="space-y-2">
+                            <h4 class="text-sm font-black text-amber-500 uppercase tracking-widest">Infiltração & Vedação</h4>
+                            <a href="https://wa.me/message/OGFM7AEP7MNSP1?text=Olá! Preciso de ajuda com infiltração e vedação nos meus faróis." class="price-link block group">
+                                <div class="flex items-baseline gap-2 transition-colors group-hover:text-amber-500">
+                                    <span class="text-xs text-stone-500 font-bold uppercase">A partir de</span>
+                                    <div class="text-4xl font-black italic">R$ 150 <span class="text-xs font-normal text-stone-500 italic lowercase">/cada</span></div>
+                                </div>
+                                <div class="text-[10px] text-stone-600 font-bold uppercase mt-1">Clique para agendar</div>
+                            </a>
+                        </div>
+                        <p class="text-sm text-stone-400 leading-relaxed italic font-bold">Problemas internos? Resolvemos o acúmulo de água e sujeira por dentro do farol.</p>
+                        
+                        <div class="bg-black/40 p-4 rounded-2xl space-y-3 border border-stone-800">
+                            <div class="flex justify-between items-center text-[10px] font-black uppercase">
+                                <span>Par (Vedação)</span>
+                                <span class="text-amber-500">R$ 250</span>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] font-black uppercase">
+                                <span>Limpeza Interna Adic.</span>
+                                <span class="text-amber-500">+ R$ 200/lado</span>
+                            </div>
+                        </div>
+
+                        <ul class="text-[10px] font-black space-y-3 uppercase text-stone-400 tracking-wider italic">
+                            <li>● Identificação de trincas</li>
+                            <li>● Nova vedação estrutural</li>
+                            <li>● Higienização de projetores</li>
+                        </ul>
+                    </div>
+                </section>
             </div>
-            <p class="text-sm text-stone-400 leading-relaxed italic font-bold">
-              Problemas internos? Resolvemos o acúmulo de água e sujeira por
-              dentro do farol.
-            </p>
 
-            <div
-              class="bg-black/40 p-4 rounded-2xl space-y-3 border border-stone-800"
-            >
-              <div
-                class="flex justify-between items-center text-[10px] font-black uppercase"
-              >
-                <span>Par (Vedação)</span>
-                <span class="text-amber-500">R$ 250</span>
-              </div>
-              <div
-                class="flex justify-between items-center text-[10px] font-black uppercase"
-              >
-                <span>Limpeza Interna Adic.</span>
-                <span class="text-amber-500">+ R$ 200/lado</span>
-              </div>
-            </div>
+            <!-- Final CTA -->
+            <section class="bg-amber-500 p-12 rounded-[3.5rem] text-black text-center space-y-8 shadow-[0_0_50px_rgba(245,158,11,0.3)]">
+                <h3 class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter">Sua segurança começa <br>por um olhar renovado.</h3>
+                <p class="font-bold max-w-xl mx-auto italic text-lg leading-tight">Atendimento a domicílio na Baixada Santista. <br>Levamos a tecnologia até você.</p>
+                <div class="flex flex-col md:flex-row justify-center gap-6 pt-4">
+                    <a href="https://wa.me/message/OGFM7AEP7MNSP1" class="bg-black text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all text-sm shadow-xl">Solicitar Orçamento</a>
+                    <a href="https://linktr.ee/redesmw" target="_blank" class="bg-white/30 backdrop-blur-md border border-black/20 px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-sm italic hover:bg-white/50 transition-all">Nossas Redes</a>
+                </div>
+            </section>
 
-            <ul
-              class="text-[10px] font-black space-y-3 uppercase text-stone-400 tracking-wider italic"
-            >
-              <li>● Identificação de trincas</li>
-              <li>● Nova vedação estrutural</li>
-              <li>● Higienização de projetores</li>
-            </ul>
-          </div>
-        </section>
+        </main>
 
-        <!-- Final CTA -->
-        <section
-          class="bg-amber-500 p-12 rounded-[3.5rem] text-black text-center space-y-8 shadow-[0_0_50px_rgba(245,158,11,0.3)]"
-        >
-          <h3
-            class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter"
-          >
-            Sua segurança começa <br />por um olhar renovado.
-          </h3>
-          <p class="font-bold max-w-xl mx-auto italic text-lg leading-tight">
-            Atendimento a domicílio na Baixada Santista. <br />Levamos a
-            tecnologia até você.
-          </p>
-          <div class="flex flex-col md:flex-row justify-center gap-6 pt-4">
-            <a
-              href="https://wa.me/message/OGFM7AEP7MNSP1"
-              class="bg-black text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest hover:scale-105 transition-all text-sm shadow-xl"
-              >Solicitar Orçamento</a
-            >
-            <a
-              href="https://linktr.ee/redesmw"
-              target="_blank"
-              class="bg-white/30 backdrop-blur-md border border-black/20 px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-sm italic hover:bg-white/50 transition-all"
-              >Nossas Redes</a
-            >
-          </div>
-        </section>
-      </main>
-
-      <footer class="p-12 border-t border-stone-900 text-center space-y-4">
-        <div
-          class="bg-amber-500 text-black w-10 h-10 flex items-center justify-center rounded-lg font-black italic mx-auto"
-        >
-          MW
-        </div>
-        <p
-          class="text-[10px] font-black text-stone-600 uppercase tracking-[0.5em]"
-        >
-          MW Estética Automotiva - Especialista em Recuperação de Faróis
-        </p>
-      </footer>
+        <footer class="p-12 border-t border-stone-900 text-center space-y-4">
+            <div class="bg-amber-500 text-black w-10 h-10 flex items-center justify-center rounded-lg font-black italic mx-auto">MW</div>
+            <p class="text-[10px] font-black text-stone-600 uppercase tracking-[0.5em]">MW Estética Automotiva - Especialista em Recuperação de Faróis</p>
+        </footer>
     </div>
 
     <script>
-      // Lógica do Slider
-      const container = document.getElementById('comparison');
-      const handle = document.getElementById('handle');
-      const afterImg = document.getElementById('after-img');
+        // Lógica do Slider
+        const container = document.getElementById('comparison');
+        const handle = document.getElementById('handle');
+        const afterImg = document.getElementById('after-img');
 
-      function moveSlider(e) {
-        let x;
-        if (e.type === 'touchstart' || e.type === 'touchmove') {
-          x = e.touches[0].clientX - container.getBoundingClientRect().left;
-        } else {
-          x = e.clientX - container.getBoundingClientRect().left;
+        function moveSlider(e) {
+            let x;
+            if (e.type === 'touchstart' || e.type === 'touchmove') {
+                x = e.touches[0].clientX - container.getBoundingClientRect().left;
+            } else {
+                x = e.clientX - container.getBoundingClientRect().left;
+            }
+            
+            let containerWidth = container.offsetWidth;
+            let percent = (x / containerWidth) * 100;
+            
+            if (percent < 0) percent = 0;
+            if (percent > 100) percent = 100;
+            
+            handle.style.left = `${percent}%`;
+            afterImg.style.clipPath = `inset(0 0 0 ${percent}%)`;
         }
 
-        let containerWidth = container.offsetWidth;
-        let percent = (x / containerWidth) * 100;
+        container.addEventListener('mousemove', moveSlider);
+        container.addEventListener('touchstart', moveSlider);
+        container.addEventListener('touchmove', moveSlider);
 
-        if (percent < 0) percent = 0;
-        if (percent > 100) percent = 100;
-
-        handle.style.left = `${percent}%`;
-        afterImg.style.clipPath = `inset(0 0 0 ${percent}%)`;
-      }
-
-      container.addEventListener('mousemove', moveSlider);
-      container.addEventListener('touchstart', moveSlider);
-      container.addEventListener('touchmove', moveSlider);
-
-      // Gráfico de Eficiência
-      window.onload = function () {
-        const ctx = document.getElementById('visChart').getContext('2d');
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['Amarelado', 'Polimento Comum', 'MW Vapor Pro'],
-            datasets: [
-              {
-                label: 'Eficiência de Iluminação (%)',
-                data: [30, 55, 100],
-                backgroundColor: ['#333', '#666', '#f59e0b'],
-                borderRadius: 12,
-                barThickness: 35,
-              },
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-            },
-            scales: {
-              y: {
-                beginAtZero: true,
-                grid: { color: '#222' },
-                ticks: {
-                  color: '#666',
-                  callback: function (value) {
-                    return value + '%';
-                  },
+        // Gráfico de Eficiência
+        window.onload = function() {
+            const ctx = document.getElementById('visChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Amarelado', 'Polimento Comum', 'MW Vapor Pro'],
+                    datasets: [{
+                        label: 'Eficiência de Iluminação (%)',
+                        data: [30, 55, 100],
+                        backgroundColor: ['#333', '#666', '#f59e0b'],
+                        borderRadius: 12,
+                        barThickness: 35
+                    }]
                 },
-              },
-              x: {
-                grid: { display: false },
-                ticks: {
-                  color: '#fff',
-                  font: {
-                    weight: 'bold',
-                    size: 10,
-                    family: 'Plus Jakarta Sans',
-                  },
-                },
-              },
-            },
-          },
-        });
-      };
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: true,
+                            grid: { color: '#222' },
+                            ticks: { 
+                                color: '#666',
+                                callback: function(value) { return value + "%" }
+                            }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#fff', font: { weight: 'bold', size: 10, family: 'Plus Jakarta Sans' } }
+                        }
+                    }
+                }
+            });
+        };
     </script>
-  </body>
+</body>
 </html>
